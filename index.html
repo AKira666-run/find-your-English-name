@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Find Your English Name · 测一测，你最适合的英文名</title>
+  <meta name="description" content="10 道关于你的选择，找到一个真正适合你的英文名字。" />
+  <meta name="theme-color" content="#FAF6F0" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ============ 首页 ============ -->
+    <main class="screen screen--home" id="screen-home">
+
+      <p class="eyebrow">FIND YOUR ENGLISH NAME</p>
+
+      <section class="hero">
+        <div class="hero__mark">
+          <span class="hero__letter" aria-hidden="true">A</span>
+          <span class="dot dot--pink" aria-hidden="true"></span>
+          <span class="dot dot--blue" aria-hidden="true"></span>
+          <span class="dot dot--violet" aria-hidden="true"></span>
+        </div>
+
+        <h1 class="hero__title">测一测，你最适合的英文名</h1>
+        <p class="hero__subtitle">10道关于你的选择，找到一个真正适合你的英文名字。</p>
+        <p class="pill pill--info">约2分钟 · 10题</p>
+      </section>
+
+      <footer class="home-footer">
+        <p class="field-label" id="pref-label">名字偏好（可选）</p>
+
+        <div class="pref" role="group" aria-labelledby="pref-label">
+          <button type="button" class="chip" data-pref="male" aria-pressed="false">偏男生名</button>
+          <button type="button" class="chip" data-pref="female" aria-pressed="false">偏女生名</button>
+          <button type="button" class="chip is-selected" data-pref="all" aria-pressed="true">都可以</button>
+        </div>
+
+        <button type="button" class="btn btn--primary btn--start" id="start-btn">开始测试</button>
+      </footer>
+
+    </main>
+
+    <!-- ============ 答题页 ============ -->
+    <main class="screen screen--quiz" id="screen-quiz" hidden>
+
+      <header class="quiz-top">
+        <button type="button" class="icon-btn" id="back-btn" aria-label="上一题">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14.5 5.5 8 12l6.5 6.5" />
+          </svg>
+        </button>
+        <p class="quiz-counter" id="quiz-counter">QUESTION 01 / 10</p>
+      </header>
+
+      <div class="progress" id="progress" role="progressbar"
+           aria-label="答题进度" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1">
+        <div class="progress__fill" id="progress-fill"></div>
+      </div>
+
+      <section class="quiz-body">
+        <h2 class="quiz-question" id="question-text" tabindex="-1"></h2>
+        <div class="options" id="options"></div>
+      </section>
+
+    </main>
+
+    <!-- ============ 计算过渡页 ============ -->
+    <main class="screen screen--loading" id="screen-loading" hidden>
+      <div class="loading">
+        <div class="loading__dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <p class="loading__text" role="status">正在读懂你的答案……</p>
+      </div>
+    </main>
+
+    <!-- ============ 结果页 ============ -->
+    <main class="screen screen--result" id="screen-result" hidden>
+
+      <header class="result-hero">
+        <p class="result-eyebrow">YOUR ENGLISH NAME IS</p>
+        <h1 class="result-name" id="result-name"></h1>
+        <p class="result-pron" id="result-pron"></p>
+        <p class="pill pill--tag" id="result-tags"></p>
+        <div class="result-keywords" id="result-keywords"></div>
+      </header>
+
+      <section class="card">
+        <p class="card-label">NAME STORY</p>
+        <p class="card-line" id="result-meaning"></p>
+        <p class="card-line" id="result-origin"></p>
+        <p class="card-note" id="result-note" hidden></p>
+      </section>
+
+      <section class="card">
+        <p class="card-label">ABOUT YOU</p>
+        <p class="card-text" id="result-about"></p>
+      </section>
+
+      <section class="card">
+        <p class="card-label" id="result-why-label">WHY</p>
+        <p class="card-text" id="result-why"></p>
+      </section>
+
+      <section class="result-also">
+        <p class="card-label card-label--zh">备选名字</p>
+        <div class="also-grid" id="result-also"></div>
+      </section>
+
+      <div class="result-actions">
+        <button type="button" class="btn btn--primary btn--save" id="save-btn">保存结果图片</button>
+        <div class="result-secondary">
+          <button type="button" class="btn btn--ghost" id="copy-btn">复制文字</button>
+          <button type="button" class="btn btn--ghost" id="share-btn">分享</button>
+        </div>
+        <button type="button" class="link-btn" id="restart-btn">重新测试</button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- 微信等不能直接下载时，用它显示图片、提示长按保存 -->
+  <div class="img-overlay" id="img-overlay" hidden>
+    <img class="img-overlay__img" id="img-overlay-img" alt="结果卡片" />
+    <p class="img-overlay__hint">长按图片保存到相册</p>
+    <button type="button" class="img-overlay__close" id="img-overlay-close">关闭</button>
+  </div>
+
+  <script src="js/data-questions.js"></script>
+  <script src="js/scoring.js"></script>
+  <script src="js/data-names.js"></script>
+  <script src="js/data-copy.js"></script>
+  <script src="js/share-card.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
